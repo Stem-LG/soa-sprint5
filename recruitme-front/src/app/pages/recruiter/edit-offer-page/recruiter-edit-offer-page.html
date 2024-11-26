@@ -1,0 +1,126 @@
+<div class="w-full pt-20">
+  <div class="w-[800px] mx-auto space-y-8">
+    <app-bar title="Edit Job Offer" backLink="../" />
+
+    <div class="border w-[890px] mx-auto mt-4 border-primary p-4">
+      <p class="text-xl font-semibold">Job Information</p>
+      <p>Enter job information to create</p>
+
+      <form
+        [formGroup]="editOfferForm"
+        (ngSubmit)="updateOffer()"
+        [noValidate]="false"
+      >
+        <div class="[&>div>div>label]:mb-1 [&>div>div>label]:ml-1 flex gap-5">
+          <div class="flex-1">
+            <div class="mt-4">
+              <label class="block" for="title">Title</label>
+              <input
+                type="text"
+                id="title"
+                name="title"
+                class="input w-full input-primary"
+                placeholder="Software Engineer"
+                formControlName="title"
+              />
+            </div>
+            <div class="mt-4">
+              <label class="block" for="company">Company</label>
+              <input
+                type="text"
+                id="company"
+                name="company"
+                class="input w-full input-primary"
+                placeholder="Company Name"
+                formControlName="company"
+              />
+            </div>
+            <div class="mt-4">
+              <label class="block" for="skills">Skills</label>
+              <input
+                type="text"
+                id="skills"
+                name="skills"
+                class="input w-full input-primary"
+                placeholder="JavaScript, TypeScript, React"
+                formControlName="skills"
+              />
+            </div>
+            <div class="mt-4">
+              <label class="block" for="description">Description</label>
+              <textarea
+                id="description"
+                name="description"
+                class="textarea w-full textarea-primary"
+                placeholder="This job is for a software engineer who has experience in JavaScript, TypeScript, and React."
+                rows="4"
+                formControlName="description"
+              ></textarea>
+            </div>
+          </div>
+          <div class="flex-1 pt-4">
+            <label class="block" for="resume">Pictures</label>
+            <div class="flex flex-wrap gap-4 mt-1">
+              @for (picture of pictures; track $index) {
+              <div class="size-32 bg-black rounded group relative">
+                <img
+                  [src]="picture"
+                  class="w-full h-full object-cover absolute top-0 left-0"
+                />
+                <button
+                  class="bg-error absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                  type="button"
+                  (click)="removePicture($index)"
+                >
+                  <lucide-icon [img]="XIcon" size="28px" class="text-white" />
+                </button>
+                <div
+                  class="flex w-full justify-center gap-4 absolute bottom-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                >
+                  <button
+                    class="bg-primary"
+                    (click)="movePicture($index, 'up')"
+                    type="button"
+                  >
+                    <lucide-icon
+                      [img]="ArrowUpIcon"
+                      size="28px"
+                      class="text-white"
+                    />
+                  </button>
+                  <button
+                    class="bg-primary"
+                    (click)="movePicture($index, 'down')"
+                    type="button"
+                  >
+                    <lucide-icon
+                      [img]="ArrowUpIcon"
+                      size="28px"
+                      class="text-white rotate-180"
+                    />
+                  </button>
+                </div>
+              </div>
+              }
+
+              <button
+                class="size-32 flex justify-center rounded items-center border border-primary"
+                (click)="addPictures()"
+                type="button"
+              >
+                <lucide-icon
+                  [img]="PlusIcon"
+                  size="40px"
+                  class="text-primary"
+                />
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="flex justify-center">
+          <button class="w-full btn btn-primary mt-2">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

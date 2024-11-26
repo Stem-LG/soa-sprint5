@@ -1,0 +1,44 @@
+<div class="pt-20 max-w-[1312px] w-full px-4 sm:px-16 mx-auto space-y-3">
+  <app-bar title="Job Offers" />
+  <div class="flex gap-4 justify-end">
+    <input
+      type="text"
+      class="input input-bordered"
+      placeholder="search query"
+      [(ngModel)]="searchQueryValue"
+      (keyup.enter)="onSearchClick()"
+    />
+    <select
+      class="select select-primary select-all"
+      [(ngModel)]="searchOptionValue"
+    >
+      <option value="title">Title</option>
+      <option value="skill">Skill</option>
+      <option value="company">Company</option>
+    </select>
+    <button class="btn btn-primary" (click)="onSearchClick()">Search</button>
+  </div>
+
+  <div class="flex flex-wrap gap-4 justify-center">
+    @for (offer of jobOffersService.jobOffers; track offer.id){
+    <job-offer-card [offer]="offer"></job-offer-card>
+    }
+  </div>
+
+  <div class="join justify-center w-full">
+    @if (jobOffersService.pageInfo().number == 0) {
+    <button class="join-item btn" disabled>«</button>
+    }@else {
+    <button class="join-item btn" (click)="previousPage()">«</button>
+    } @for(page of pages(); track page){ @if (page ==
+    jobOffersService.pageInfo().number + 1 ) {
+    <button class="join-item btn btn-primary">{{ page }}</button>
+    }@else {
+    <button class="join-item btn" (click)="goToPage(page)">{{ page }}</button>
+    } } @if (jobOffersService.pageInfo().number == pages().length - 1) {
+    <button class="join-item btn" disabled>»</button>
+    }@else {
+    <button class="join-item btn" (click)="nextPage()">»</button>
+    }
+  </div>
+</div>

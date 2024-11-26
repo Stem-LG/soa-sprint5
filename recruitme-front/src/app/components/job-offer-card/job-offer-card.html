@@ -1,0 +1,29 @@
+<div class="relative w-full sm:w-96 border rounded border-slate-300 p-4">
+  <p class="absolute right-4 top-2">#{{ offer.id }}</p>
+  <div class="flex items-center gap-4">
+    @if (offer.images && offer.images.length > 0) {
+    <img class="w-20 h-20 rounded object-cover" [src]="offer.images[0]" />
+    }@else {
+    <div class="w-20 h-20 flex justify-center items-center rounded">
+      <lucide-icon [img]="imageOff" size="48px" class="text-primary" />
+    </div>
+    }
+    <div class="-space-y-1">
+      <p class="text-xl font-bold">{{ offer.title }}</p>
+      <p>{{ offer.company }}</p>
+    </div>
+  </div>
+  <div class="flex mt-3 justify-between items-center">
+    <p class="">
+      {{ offer.createdAt.toLocaleString("en-GB", { year: "numeric", month:
+      "numeric", day: "numeric" }) }}
+    </p>
+    <a
+      class="btn btn-secondary"
+      routerLink="./{{ offer.id }}"
+      routerLinkActive="active"
+    >
+      Details
+    </a>
+  </div>
+</div>

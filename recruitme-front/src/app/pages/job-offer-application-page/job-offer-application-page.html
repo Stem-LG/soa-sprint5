@@ -1,0 +1,74 @@
+<div class="pt-20 max-w-[1312px] w-full px-4 sm:px-16 mx-auto space-y-3">
+  @if (success) {
+  <div class="alert alert-success absolute right-5 bottom-5 w-80">
+    Application submitted successfully
+  </div>
+  }
+  <app-bar
+    title="Submit Application"
+    backLink="/offers/{{ jobOfferService.jobOffer()?.id }}"
+  />
+
+  <div class="border w-[450px] mx-auto mt-4 border-primary p-4">
+    <p class="text-xl font-semibold">{{ jobOfferService.jobOffer()?.title }}</p>
+    <p>Enter your information to apply</p>
+
+    <form
+      class="[&>div>label]:mb-1 [&>div>label]:ml-1"
+      [formGroup]="applicationForm"
+      (ngSubmit)="submitApplication()"
+      [noValidate]="false"
+    >
+      <div class="mt-4">
+        <label class="block" for="name">Full name</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          class="input w-full input-primary"
+          placeholder="Max Verstappen"
+          formControlName="name"
+          required
+        />
+      </div>
+      <div class="mt-4">
+        <label class="block" for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          class="input w-full input-primary"
+          placeholder="max@example.com"
+          formControlName="email"
+          required
+        />
+      </div>
+      <div class="mt-4">
+        <label class="block" for="resume">Resume (PDF)</label>
+        <input
+          type="file"
+          accept=".pdf"
+          id="resume"
+          name="resume"
+          class="file-input w-full file-input-primary"
+          required
+          (change)="onFileChange($event)"
+          formControlName="resume"
+        />
+      </div>
+      <div class="mt-4">
+        <label class="block" for="motivation">Motivation</label>
+        <textarea
+          id="motivation"
+          name="motivation"
+          class="textarea w-full textarea-primary"
+          placeholder="I am interested in this job because..."
+          rows="4"
+          formControlName="motivation"
+          required
+        ></textarea>
+      </div>
+      <button class="w-full btn btn-primary mt-2" type="submit">Apply</button>
+    </form>
+  </div>
+</div>

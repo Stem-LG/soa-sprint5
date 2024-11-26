@@ -1,0 +1,102 @@
+<div class="w-full pt-20">
+  <div class="w-[800px] mx-auto space-y-8">
+    <div class="flex items-center gap-3">
+      <button
+        routerLink="/offers/"
+        routerLinkActive="active"
+        class="btn btn-ghost btn-square"
+      >
+        <lucide-icon [img]="ChevronLeft" />
+      </button>
+      <p class="text-3xl font-bold">Register</p>
+    </div>
+
+    <div class="border w-[450px] mx-auto mt-4 border-primary p-4">
+      <p>Create your account</p>
+
+      <form
+        class="[&>div>label]:mb-1 [&>div>label]:ml-1"
+        [formGroup]="registerForm"
+        (ngSubmit)="onSubmit()"
+        [noValidate]="false"
+      >
+        <div class="mt-4">
+          <label class="block" for="username">Username</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            class="input w-full input-primary"
+            placeholder="johndoe"
+            formControlName="username"
+            required
+          />
+        </div>
+        <div class="mt-4">
+          <label class="block" for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="input w-full input-primary"
+            placeholder="john@example.com"
+            formControlName="email"
+            required
+          />
+        </div>
+        <div class="mt-4">
+          <label class="block" for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="input w-full input-primary"
+            placeholder="********"
+            formControlName="password"
+            required
+          />
+        </div>
+        <div class="mt-4">
+          <label class="block" for="confirmPassword">Confirm Password</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="input w-full input-primary"
+            placeholder="********"
+            formControlName="confirmPassword"
+            required
+          />
+        </div>
+        <div class="my-4 flex justify-center items-center gap-2">
+          <p>Applicant</p>
+          <input
+            type="checkbox"
+            id="role"
+            class="toggle toggle-primary"
+            [checked]="registerForm.get('role')?.value === 'RECRUITER'"
+            (change)="toggleRole()"
+          />
+          <p>Recruiter</p>
+        </div>
+        <p>
+          Already have an account?
+          <a routerLink="/login" class="link">Login here</a>
+        </p>
+
+        <button
+          class="w-full btn btn-primary mt-2"
+          type="submit"
+          [disabled]="isLoading"
+        >
+          @if(isLoading){
+          <lucide-icon [img]="LoaderCircle" class="animate-spin" />
+          } Register
+        </button>
+        @if (error) {
+        <p class="text-white bg-red-600 py-1 px-3 mt-2">{{error}}</p>
+        }
+      </form>
+    </div>
+  </div>
+</div>

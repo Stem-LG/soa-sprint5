@@ -1,0 +1,85 @@
+<div class="border border-primary p-4 mt-4">
+  @if (offer != null) {
+  <div class="flex justify-between">
+    <p class="text-xl font-semibold">{{ offer.title }}</p>
+    <p>#{{ offer.id }}</p>
+  </div>
+  <p>
+    Posted at {{ offer.createdAt.toLocaleString("en-GB",{ year: "numeric",
+    month: "numeric", day: "numeric" }) }} by {{ offer.company }}
+  </p>
+
+  <p class="font-semibold mt-4">Skills:</p>
+  <p class="mt-1">{{ offer.skills }}</p>
+  <p class="font-semibold mt-4">Description:</p>
+  <p class="mt-1">{{ offer.description }}</p>
+  <p class="font-semibold mt-4">Gallery:</p>
+
+  @if (offer.images && offer.images.length > 0) {
+  <div class="mt-1 flex gap-2">
+    @for (image of jobOfferService.jobOffer()?.images; track $index) {
+    <img
+      class="w-28 h-28 object-cover"
+      [src]="image"
+      (click)="openImage(image)"
+    />
+    }
+  </div>
+  }@else {
+  <p class="mt-1">No images available</p>
+  } @switch (role) { @case ("USER") { @if (authService.user()) {
+  <button class="btn btn-primary mt-3" routerLink="./apply">Apply</button>
+  }@else {
+  <button class="btn btn-primary mt-3" disabled>
+    <lucide-icon [img]="Lock" size="20px" /> Login to apply
+  </button>
+  } } @case ("RECRUITER") { @if( offer.createdBy == authService.user()!.id) {
+  <div class="flex gap-2 mt-3">
+    <button routerLink="./applications" class="btn btn-primary">
+      Applicants List
+    </button>
+    <button routerLink="./edit" class="btn btn-secondary">Edit</button>
+    <button class="btn btn-error" onclick="my_modal_5.showModal()">
+      Delete
+    </button>
+    <dialog id="my_modal_5" class="modal modal-bottom sm:modal-middle">
+      <div class="modal-box">
+        <h3 class="text-lg font-bold">Delete Job Offer</h3>
+        <p class="py-4">Are you sure you want to delete this job offer?</p>
+        <div class="modal-action">
+          <form method="dialog">
+            <button class="btn">Close</button>
+          </form>
+          <button class="btn btn-error" (click)="deleteOffer()">Delete</button>
+        </div>
+      </div>
+      <form method="dialog" class="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
+  </div>
+  }@else {
+  <button class="btn btn-primary mt-3" disabled>
+    <lucide-icon [img]="Lock" size="20px" /> You can only edit your own job
+    offers
+  </button>
+  } } } }@else{
+  <div class="w-full h-96 flex items-center justify-center">
+    <p>404 Job offer not found</p>
+  </div>
+  }
+</div>
+
+<dialog id="image_modal" class="modal modal-bottom sm:modal-middle">
+  <div class="modal-box">
+    <img [src]="selectedImage" alt="" />
+    <div class="modal-action">
+      <form method="dialog">
+        <button class="btn">Close</button>
+      </form>
+    </div>
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button></button>
+  </form>
+</dialog>

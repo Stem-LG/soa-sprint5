@@ -1,0 +1,30 @@
+<div class="flex justify-between">
+  <div class="flex items-center gap-3">
+    @if (backLink) {
+    <a
+      routerLink="{{backLink}}"
+      routerLinkActive="active"
+      class="btn btn-ghost btn-square"
+    >
+      <lucide-icon [img]="ChevronLeft" />
+    </a>
+    }
+    <p class="text-3xl font-bold">
+      {{title}}
+      <span class="text-lg">{{subtitle}}</span>
+    </p>
+    @if (createButton) {
+    <a routerLink="{{createButton.link}}" class="btn btn-primary">
+      {{createButton.label}}
+    </a>
+    }
+  </div>
+  @if (authService.user()) {
+  <div class="flex items-center gap-4">
+    <p class="font-medium">{{authService.user()?.username}}</p>
+    <button (click)="logout()" class="btn btn-error">Logout</button>
+  </div>
+  }@else{
+  <a routerLink="/login" class="btn btn-primary">Login</a>
+  }
+</div>

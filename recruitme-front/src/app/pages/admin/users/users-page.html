@@ -1,0 +1,44 @@
+<div class="pt-20 max-w-[1312px] w-full px-4 sm:px-16 mx-auto space-y-3">
+  <app-bar title="Users" backLink="../" />
+  <div class="flex gap-4">
+    <div class="flex-1">
+      <select class="select select-primary" (change)="onFilterChange($event)">
+        <option value="all">Role</option>
+        <option value="user">User</option>
+        <option value="recruiter">Recruiter</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+  </div>
+  <table class="table table-lg border-primary border mt-4">
+    <thead>
+      <tr class="text-sm">
+        <th class="w-10">ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (user of filteredUsers(); track $index) {
+      <tr (click)="openUserDialog(user)">
+        <td>{{ user.id }}</td>
+        <td>{{ user.username }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<dialog id="users_modal" class="modal">
+  <div class="modal-box min-w-[800px]">
+
+    <input type="text">
+
+  </div>
+  <form method="dialog" class="modal-backdrop">
+    <button></button>
+  </form>
+</dialog>

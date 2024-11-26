@@ -1,0 +1,88 @@
+<div class="pt-20 max-w-[1312px] w-full px-4 sm:px-16 mx-auto space-y-3">
+  <app-bar title="Application Details" backLink="../" />
+
+  <div class="border border-primary p-4 mt-4">
+    <div class="flex justify-between">
+      <p class="text-xl font-semibold">
+        {{ jobApplicationService.jobApplication?.jobOffer.title }}
+      </p>
+      <p>#{{ jobApplicationService.jobApplication?.id }}</p>
+    </div>
+    <div class="flex justify-between">
+      <p>
+        Applied at {{
+        jobApplicationService.jobApplication?.createdAt?.toLocaleString("en-GB",{
+        year: "numeric", month: "numeric", day: "numeric" }) }}
+      </p>
+      <div class="w-20">
+        @switch (jobApplicationService.jobApplication?.status) { @case
+        ('accepted'){
+        <div class="badge badge-success w-full">
+          {{ jobApplicationService.jobApplication?.status }}
+        </div>
+        } @case ('pending') {
+        <div class="badge badge-warning w-full">
+          {{ jobApplicationService.jobApplication?.status }}
+        </div>
+        } @case ('rejected') {
+        <div class="badge badge-error w-full">
+          {{ jobApplicationService.jobApplication?.status }}
+        </div>
+        } }
+      </div>
+    </div>
+
+    <p class="font-semibold mt-5">Name:</p>
+    <p class="">{{ jobApplicationService.jobApplication?.name }}</p>
+    <p class="font-semibold mt-3">Email:</p>
+    <p class="">{{ jobApplicationService.jobApplication?.email }}</p>
+    <p class="font-semibold mt-3">Motivation:</p>
+    <p class="">{{ jobApplicationService.jobApplication?.motivation }}</p>
+    <p class="font-semibold mt-3">Resume:</p>
+    <div class="mt-1 flex gap-2">
+      <a
+        href="{{resumeUrlBase +  this.jobApplicationService.jobApplication?.resumeFile?.id}}"
+        class="btn btn-secondary btn-sm"
+        >Download
+      </a>
+      <button class="btn btn-secondary btn-sm" onclick="my_modal_1.showModal()">
+        View
+      </button>
+      <dialog id="my_modal_1" class="modal">
+        <div class="modal-box w-[700px] max-w-none">
+          <pdf-viewer
+            [src]="resumeUrlBase +  this.jobApplicationService.jobApplication?.resumeFile?.id"
+            [render-text]="true"
+            [fit-to-page]="true"
+            class="w-full h-[500px]"
+          ></pdf-viewer>
+          <div class="modal-action">
+            <form method="dialog">
+              <button class="btn">Close</button>
+            </form>
+          </div>
+        </div>
+      </dialog>
+    </div>
+    <div class="flex gap-2 mt-5">
+      <button
+        class="btn btn-success"
+        (click)="jobApplicationService.acceptApplication()"
+      >
+        Accept
+      </button>
+      <button
+        class="btn btn-warning"
+        (click)="jobApplicationService.pendingApplication()"
+      >
+        Pending
+      </button>
+      <button
+        class="btn btn-error"
+        (click)="jobApplicationService.rejectApplication()"
+      >
+        Reject
+      </button>
+    </div>
+  </div>
+</div>

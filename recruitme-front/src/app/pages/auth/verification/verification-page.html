@@ -1,0 +1,37 @@
+<div class="w-full pt-20">
+  <div class="w-[800px] mx-auto space-y-8">
+    <div class="flex items-center gap-3">
+      <button
+        routerLink="/offers/"
+        routerLinkActive="active"
+        class="btn btn-ghost btn-square"
+      >
+        <lucide-icon [img]="ChevronLeft" />
+      </button>
+      <p class="text-3xl font-bold">Verification</p>
+    </div>
+
+    <div class="border w-[450px] mx-auto mt-4 border-primary p-4">
+      <form
+        class="[&>div>label]:mb-1 [&>div>label]:ml-1"
+        [formGroup]="verificationForm"
+        (ngSubmit)="onSubmit()"
+        [noValidate]="false"
+      >
+        <label class="block" for="code">Code</label>
+        <input
+          type="text"
+          id="code"
+          name="code"
+          class="input w-full input-primary"
+          placeholder="******"
+          formControlName="code"
+          required
+        />
+        <button class="w-full btn btn-primary mt-2" type="submit">
+          Verify
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
